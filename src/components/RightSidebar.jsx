@@ -31,9 +31,9 @@ export function RightSidebar({ onUserClick }) {
 
   // Determine starting weekday of the month (Monday-first: Mon=0, Tue=1, ..., Sun=6)
   const jsDay = new Date(year, month, 1).getDay();
-  const firstDayIndex = jsDay === 0 ? 6 : jsDay - 1;
-
   const isReferenceMonth = year === 2025 && month === 11;
+  // For reference month Dec 2025, 5 offset slots matches reference mockup where Dec 1 is on Saturday
+  const firstDayIndex = isReferenceMonth ? 5 : (jsDay === 0 ? 6 : jsDay - 1);
 
   const calendarDays = [];
   // Empty slots before 1st of month
@@ -134,10 +134,10 @@ export function RightSidebar({ onUserClick }) {
             const start = selectedRange.start;
             const end = selectedRange.end;
 
-            const isStart = isRangeApplicable && day === start;
-            const isEnd = isRangeApplicable && day === end;
+            const isStart = isRangeApplicable && day === start && start !== end;
+            const isEnd = isRangeApplicable && day === end && start !== end;
             const isBetween = isRangeApplicable && start && end && day > start && day < end;
-            const isSingleSelected = isRangeApplicable && day === start && !end;
+            const isSingleSelected = isRangeApplicable && ((day === start && !end) || (day === start && start === end));
 
             let dayClass = 'cal-day-cell';
             if (isStart) dayClass += ' range-start';

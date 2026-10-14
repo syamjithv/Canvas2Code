@@ -790,62 +790,126 @@
 .calendar-days-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  column-gap: 0;
   row-gap: 6px;
 }
 
 .cal-empty-slot {
   height: 32px;
+  width: 100%;
 }
 
 .cal-day-cell {
   height: 32px;
-  width: 32px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12.5px;
   font-weight: 500;
   color: #4b5563;
-  border-radius: 50%;
+  background: transparent;
+  border: none;
+  border-radius: 0;
   cursor: pointer;
-  transition: all 0.15s ease;
   position: relative;
+  transition: all 0.15s ease;
 }
 
-.cal-day-cell:hover:not(.range-start):not(.range-end) {
+.cal-day-number {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.cal-day-cell:hover:not(.range-start):not(.range-end):not(.range-between) .cal-day-number {
   background-color: #f1f5f9;
   color: var(--text-primary);
 }
 
-/* Connected range styles matching screenshot Dec 11-14 */
-.cal-day-cell.range-start {
-  background-color: var(--green-primary);
+/* ==========================================================================
+   Continuous Date-Range Highlight (December 11–14, 2025)
+   - Dec 11: Dark-green circular background with white text
+   - Dec 12 & 13: Continuous light-green strip behind both dates (zero gap)
+   - Dec 14: Dark-green circular background with white text
+   - Seamless transition connecting the endpoints and horizontal strip
+   ========================================================================== */
+
+/* Start Date (Dec 11): Dark green circle + light green strip extending right */
+.cal-day-cell.range-start::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: -1px;
+  background-color: #d4f3e1;
+  z-index: 1;
+}
+
+.cal-day-cell.range-start .cal-day-number {
+  background-color: #189d4d;
   color: #ffffff;
   font-weight: 600;
   border-radius: 50%;
+  z-index: 2;
 }
 
-.cal-day-cell.range-end {
-  background-color: var(--green-primary);
+/* Between Dates (Dec 12 & 13): Single continuous light-green strip */
+.cal-day-cell.range-between::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  right: -1px;
+  background-color: #d4f3e1;
+  z-index: 1;
+}
+
+.cal-day-cell.range-between .cal-day-number {
+  color: #2e4a36;
+  font-weight: 600;
+  background-color: transparent;
+  border-radius: 0;
+  z-index: 2;
+}
+
+/* End Date (Dec 14): Dark green circle + light green strip entering from left */
+.cal-day-cell.range-end::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  right: 50%;
+  background-color: #d4f3e1;
+  z-index: 1;
+}
+
+.cal-day-cell.range-end .cal-day-number {
+  background-color: #189d4d;
   color: #ffffff;
   font-weight: 600;
   border-radius: 50%;
+  z-index: 2;
 }
 
-.cal-day-cell.range-between {
-  background-color: var(--green-badge);
-  color: #15803d;
-  font-weight: 600;
-  border-radius: 6px;
-}
-
-.cal-day-cell.selected-single {
-  background-color: var(--green-primary);
+/* Single selected day fallback */
+.cal-day-cell.selected-single .cal-day-number {
+  background-color: #189d4d;
   color: #ffffff;
   font-weight: 600;
   border-radius: 50%;
+  z-index: 2;
 }
 
 /* Online Users Section */
