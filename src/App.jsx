@@ -7,6 +7,12 @@ import { RightSidebar } from './components/RightSidebar';
 import { CourseDetailPage } from './components/CourseDetailPage';
 import { CourseModal } from './components/CourseModal';
 import { UserModal } from './components/UserModal';
+import { AllCoursesPage } from './components/pages/AllCoursesPage';
+import { MessagesPage } from './components/pages/MessagesPage';
+import { FriendsPage } from './components/pages/FriendsPage';
+import { SchedulePage } from './components/pages/SchedulePage';
+import { TodoPage } from './components/pages/TodoPage';
+import { SettingsPage } from './components/pages/SettingsPage';
 import { coursesData } from './data/courses';
 import './App.css';
 
@@ -65,11 +71,12 @@ export function App() {
 
   const handleBackToDashboard = () => {
     setActiveCourseDetail(null);
+    setActiveNav('dashboard');
   };
 
   const handleSidebarNav = (navId) => {
     setActiveNav(navId);
-    // Clicking navigation items like Dashboard or All Courses returns to dashboard view
+    // Clicking navigation items returns from detail views
     setActiveCourseDetail(null);
   };
 
@@ -94,11 +101,46 @@ export function App() {
 
       {/* Standalone Floating White Panel - sits to the right of the green sidebar */}
       <div className="dashboard-floating-panel">
-        {/* Central Courses Section */}
+        {/* Central Content Area */}
         <main className="dashboard-main-content">
           {activeCourseDetail ? (
             <CourseDetailPage
               course={activeCourseDetail}
+              onBack={handleBackToDashboard}
+            />
+          ) : activeNav === 'courses' ? (
+            <AllCoursesPage
+              onSelectCourse={handleSelectCourse}
+              onBack={handleBackToDashboard}
+            />
+          ) : activeNav === 'messages' ? (
+            <MessagesPage
+              onBack={handleBackToDashboard}
+            />
+          ) : activeNav === 'friends' ? (
+            <FriendsPage
+              onBack={handleBackToDashboard}
+              onNavigateToMessages={() => {
+                setActiveNav('messages');
+                setActiveCourseDetail(null);
+              }}
+            />
+          ) : activeNav === 'schedule' ? (
+            <SchedulePage
+              onBack={handleBackToDashboard}
+              onSelectCourseTitle={(title) => {
+                const c = coursesData.find(
+                  (x) => x.title.toLowerCase() === title.toLowerCase()
+                );
+                if (c) setActiveCourseDetail(c);
+              }}
+            />
+          ) : activeNav === 'todo' ? (
+            <TodoPage
+              onBack={handleBackToDashboard}
+            />
+          ) : activeNav === 'settings' ? (
+            <SettingsPage
               onBack={handleBackToDashboard}
             />
           ) : (
