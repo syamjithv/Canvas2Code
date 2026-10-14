@@ -1,0 +1,82 @@
+/* Modern Reset & Base Typography */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --green-primary: #0e8345;
+  --green-hover: #0b6b38;
+  --green-active: #09592f;
+  --green-subtle: #e8f5e9;
+  --green-badge: #dcfce7;
+  --green-dot: #10b981;
+
+  --text-primary: #1f2432;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --text-light: #8b8fa3;
+
+  --bg-viewport: var(--green-primary);
+  --bg-canvas: #ffffff;
+  --bg-pill: #f8fafc;
+  --border-pill: #e5e7eb;
+
+  --shadow-canvas: 0 16px 48px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.02);
+  --shadow-card-hover: 0 10px 24px -4px rgba(0, 0, 0, 0.06);
+
+  --radius-canvas: 24px;
+  --radius-card: 20px;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-main);
+  background-color: var(--green-primary);
+  color: var(--text-primary);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--green-primary);
+  border-radius: 0;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--green-primary);
+  outline-offset: 2px;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
