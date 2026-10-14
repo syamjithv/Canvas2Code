@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { FilterBar } from './components/FilterBar';
 import { CourseGrid } from './components/CourseGrid';
 import { RightSidebar } from './components/RightSidebar';
+import { CourseDetailPage } from './components/CourseDetailPage';
 import { CourseModal } from './components/CourseModal';
 import { UserModal } from './components/UserModal';
 import { coursesData } from './data/courses';
@@ -18,7 +19,8 @@ export function App() {
     language: '',
     type: ''
   });
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [activeCourseDetail, setActiveCourseDetail] = useState(null);
+  const [selectedCourseModal, setSelectedCourseModal] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -56,6 +58,21 @@ export function App() {
     });
   };
 
+  const handleSelectCourse = (course) => {
+    // Open dedicated course-detail page
+    setActiveCourseDetail(course);
+  };
+
+  const handleBackToDashboard = () => {
+    setActiveCourseDetail(null);
+  };
+
+  const handleSidebarNav = (navId) => {
+    setActiveNav(navId);
+    // Clicking navigation items like Dashboard or All Courses returns to dashboard view
+    setActiveCourseDetail(null);
+  };
+
   return (
     <div className="dashboard-viewport">
       {/* Mobile backdrop */}
@@ -70,7 +87,7 @@ export function App() {
       {/* Left Green Sidebar - integrated directly into the full-page green background */}
       <Sidebar
         activeItem={activeNav}
-        setActiveItem={setActiveNav}
+        setActiveItem={handleSidebarNav}
         mobileOpen={mobileOpen}
         setMobileOpen={setMobileOpen}
       />
@@ -79,36 +96,45 @@ export function App() {
       <div className="dashboard-floating-panel">
         {/* Central Courses Section */}
         <main className="dashboard-main-content">
-          <Header
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            coursesCount={filteredCourses.length}
-            totalCount={coursesData.length}
-            setMobileOpen={setMobileOpen}
-          />
+          {activeCourseDetail ? (
+            <CourseDetailPage
+              course={activeCourseDetail}
+              onBack={handleBackToDashboard}
+            />
+          ) : (
+            <>
+              <Header
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                coursesCount={filteredCourses.length}
+                totalCount={coursesData.length}
+                setMobileOpen={setMobileOpen}
+              />
 
-          <FilterBar
-            filters={filters}
-            setFilters={setFilters}
-            onResetFilters={handleResetFilters}
-          />
+              <FilterBar
+                filters={filters}
+                setFilters={setFilters}
+                onResetFilters={handleResetFilters}
+              />
 
-          <CourseGrid
-            courses={filteredCourses}
-            onSelectCourse={setSelectedCourse}
-            onResetFilters={handleResetFilters}
-          />
+              <CourseGrid
+                courses={filteredCourses}
+                onSelectCourse={handleSelectCourse}
+                onResetFilters={handleResetFilters}
+              />
+            </>
+          )}
         </main>
 
         {/* Right Sidebar: Profile, Calendar, Online Users */}
         <RightSidebar onUserClick={setSelectedUser} />
       </div>
 
-      {/* Interactive Modals */}
-      {selectedCourse && (
+      {/* Interactive Quick Modal fallback if triggered */}
+      {selectedCourseModal && (
         <CourseModal
-          course={selectedCourse}
-          onClose={() => setSelectedCourse(null)}
+          course={selectedCourseModal}
+          onClose={() => setSelectedCourseModal(null)}
         />
       )}
 
