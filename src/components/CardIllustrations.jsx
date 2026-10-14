@@ -26,58 +26,76 @@ export function CardIllustration({ theme }) {
           aria-hidden="true"
         >
           <defs>
-            <linearGradient id="ai-grad-main" x1="300" y1="20" x2="520" y2="220" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#e8a8cb" />
-              <stop offset="45%" stopColor="#cf9fd4" />
-              <stop offset="80%" stopColor="#a8b2d8" />
-              <stop offset="100%" stopColor="#95abdb" />
+            {/* Main lavender & dusty periwinkle gradient */}
+            <linearGradient id="ai-grad-main" x1="220" y1="20" x2="520" y2="220" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#d5a5cf" />
+              <stop offset="30%" stopColor="#c598c8" />
+              <stop offset="65%" stopColor="#b293c6" />
+              <stop offset="90%" stopColor="#9ea4cf" />
+              <stop offset="100%" stopColor="#92a0cb" />
             </linearGradient>
-            <linearGradient id="ai-grad-top" x1="380" y1="0" x2="560" y2="90" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#f4dfee" stopOpacity="0.9" />
-              <stop offset="60%" stopColor="#e5d4ed" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#cdd4ee" stopOpacity="0.6" />
+
+            {/* Upper-right periwinkle background gradient */}
+            <linearGradient id="ai-grad-bg" x1="320" y1="0" x2="574" y2="200" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#e2ecf9" stopOpacity="0.95" />
+              <stop offset="45%" stopColor="#cbdaf2" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#b0c5e7" stopOpacity="0.8" />
             </linearGradient>
-            <linearGradient id="ai-grad-slate" x1="240" y1="140" x2="350" y2="245" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#a8b5d6" stopOpacity="0.85" />
-              <stop offset="100%" stopColor="#8b9ec7" stopOpacity="0.75" />
+
+            {/* Bottom-left slate blue gradient */}
+            <linearGradient id="ai-grad-slate" x1="180" y1="140" x2="240" y2="245" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#98a8cb" stopOpacity="0.92" />
+              <stop offset="100%" stopColor="#7e92ba" stopOpacity="0.95" />
             </linearGradient>
-            <linearGradient id="ai-grad-bean" x1="200" y1="45" x2="260" y2="90" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#b5c4e2" />
-              <stop offset="100%" stopColor="#98aed6" />
-            </linearGradient>
-            <linearGradient id="ai-grad-ring" x1="510" y1="60" x2="560" y2="130" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#d0bddf" />
-              <stop offset="100%" stopColor="#a8b8df" />
-            </linearGradient>
+
+            {/* Translucent bubble radial gradients */}
+            <radialGradient id="ai-bubble-large" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+              <stop offset="60%" stopColor="#eaf3fb" stopOpacity="0.65" />
+              <stop offset="100%" stopColor="#d4e5f7" stopOpacity="0.45" />
+            </radialGradient>
+            <radialGradient id="ai-bubble-med" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+              <stop offset="70%" stopColor="#edf5fc" stopOpacity="0.75" />
+              <stop offset="100%" stopColor="#d8e8f8" stopOpacity="0.55" />
+            </radialGradient>
           </defs>
 
-          {/* Top-right soft periwinkle/lavender lobe */}
+          {/* Layer 1: Background periwinkle shape spanning upper-right & right edge */}
           <path
-            d="M380 0 C430 0, 500 5, 555 40 C570 50, 574 70, 574 100 L574 0 Z"
-            fill="url(#ai-grad-top)"
+            d="M 288.4 0.0 C 343.3 45.5, 398.2 41.2, 453.2 21.7 C 494.4 10.8, 542.4 8.7, 574.0 13.0 L 574.0 245.0 L 453.2 245.0 C 412.0 195.1, 343.3 97.6, 288.4 0.0 Z"
+            fill="url(#ai-grad-bg)"
           />
 
-          {/* Bottom-left slate-blue organic underlayer */}
+          {/* Layer 2: Lower-left slate-blue organic underlayer (behind Felix) */}
           <path
-            d="M245 155 C238 125, 270 120, 305 130 C340 140, 360 175, 355 210 C350 240, 310 245, 280 245 C250 245, 248 180, 245 155 Z"
+            d="M 164.8 245.0 C 164.8 211.4, 173.0 184.3, 189.5 162.6 C 203.2 145.3, 217.0 138.8, 228.0 149.6 C 238.9 164.8, 247.2 206.0, 254.0 245.0 Z"
             fill="url(#ai-grad-slate)"
           />
 
-          {/* Main lavender & periwinkle fluid organic blob */}
+          {/* Layer 3: Main foreground lavender & periwinkle organic shape */}
           <path
-            d="M320 0 C300 0, 290 40, 295 90 C300 130, 275 145, 290 175 C305 205, 345 220, 385 225 C430 230, 480 235, 520 215 C550 200, 560 160, 545 125 C530 90, 520 60, 485 30 C450 0, 370 0, 320 0 Z"
+            d="M 260.9 15.2 C 309.0 17.3, 357.0 28.2, 398.2 43.4 C 453.2 65.0, 501.2 103.0, 532.8 146.3 C 556.1 182.1, 556.1 211.4, 528.7 229.8 C 501.2 240.7, 453.2 236.3, 418.8 232.0 C 377.6 227.7, 329.6 236.3, 295.2 240.7 C 254.0 242.8, 240.3 229.8, 238.9 211.4 C 236.2 178.9, 230.7 140.9, 219.7 113.8 C 206.0 84.6, 189.5 56.4, 203.2 30.4 C 217.0 13.0, 240.3 13.0, 260.9 15.2 Z"
             fill="url(#ai-grad-main)"
+            fillOpacity="0.94"
           />
 
-          {/* Floating organic bean near batch text on left */}
+          {/* Layer 4: Floating translucent accents & bubbles on the left flank */}
+          {/* Large bubble overlapping lavender and slate layer */}
+          <circle cx="200.5" cy="149.6" r="14.2" fill="url(#ai-bubble-large)" stroke="#d2e3f5" strokeWidth="1.2" />
+
+          {/* Medium bubble directly above Mr. Felix */}
+          <circle cx="210.1" cy="185.4" r="10.8" fill="url(#ai-bubble-med)" stroke="#d2e3f5" strokeWidth="0.8" />
+
+          {/* Small micro-accent droplet */}
+          <circle cx="182.6" cy="169.1" r="4.2" fill="#eaf3fb" fillOpacity="0.75" />
+
+          {/* Top-right delicate splashing droplet near card top boundary */}
           <path
-            d="M210 50 C225 38, 255 42, 262 58 C268 72, 255 88, 240 90 C220 92, 202 82, 202 68 C202 58, 205 52, 210 50 Z"
-            fill="url(#ai-grad-bean)"
+            d="M 470 28 C 470 25, 476 23, 482 25 C 488 27, 490 31, 486 33 C 481 35, 473 32, 470 28 Z"
+            fill="#e2ecf9"
+            fillOpacity="0.8"
           />
-
-          {/* Concentric accent rings near the right edge */}
-          <circle cx="536" cy="95" r="24" stroke="url(#ai-grad-ring)" strokeWidth="3" fill="none" opacity="0.8" />
-          <circle cx="552" cy="110" r="14" stroke="#aab8de" strokeWidth="2.5" fill="none" opacity="0.65" />
         </svg>
       );
 
