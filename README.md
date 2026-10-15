@@ -1,10 +1,12 @@
-# Canvas2Code 🎨
+# Syamjith's Canvas2Code 🎨
 
 Turning a visual reference into a working web experience.
 
 Canvas2Code is a frontend recreation project built for the Canvas2Code challenge at VYVIDH '26. The goal is to translate a provided website design into a functional web interface using modern frontend technologies.
 
 The project features a course dashboard inspired by virtual learning platforms, with a green sidebar, course cards, a calendar, and student information.
+
+Here is the deployed link : https://syamdoes-canvas2code.vercel.app/
 
 ![Canvas2Code dashboard featuring six course cards, sidebar navigation, calendar, and online users](public/images/canvas2code-dashboard.png)
 
